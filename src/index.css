@@ -1,0 +1,103 @@
+@import "tailwindcss";
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+  --font-display: "Archivo", "Inter", ui-sans-serif, sans-serif;
+  --font-sans: "Inter", ui-sans-serif, sans-serif;
+
+  --color-lime-50: #f7ffe0;
+  --color-lime-200: #e4ff9e;
+  --color-lime-300: #d7fb64;
+  --color-lime-400: #cdfb3a;
+  --color-lime-500: #b5e021;
+  --color-lime-600: #8fb519;
+
+  --breakpoint-xs: 30rem;
+}
+
+:root {
+  color-scheme: dark;
+  --bg: #0a0a0a;
+  --bg-soft: #0d0d0d;
+  --panel: #131313;
+  --panel-2: #171717;
+  --fg: #f3f2ed;
+  --muted: #a5a49d;
+  --muted-2: #706f68;
+  --line: rgba(243, 242, 237, 0.1);
+  --line-strong: rgba(243, 242, 237, 0.18);
+  --accent: #cdfb3a;
+  --accent-fg: #0a0a0a;
+  --accent-soft: rgba(205, 251, 58, 0.1);
+  --grain-opacity: 0.05;
+  --logo-filter: none;
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
+  --bg: #f3f2ec;
+  --bg-soft: #ebeae2;
+  --panel: #ffffff;
+  --panel-2: #f7f6f0;
+  --fg: #0c0c0b;
+  --muted: #57564f;
+  --muted-2: #8b8a82;
+  --line: rgba(12, 12, 11, 0.1);
+  --line-strong: rgba(12, 12, 11, 0.2);
+  --accent: #6f9600;
+  --accent-fg: #f3f2ec;
+  --accent-soft: rgba(111, 150, 0, 0.1);
+  --grain-opacity: 0.035;
+  --logo-filter: invert(1) brightness(0.92) contrast(1.05);
+}
+
+* {
+  border-color: var(--line);
+}
+
+html {
+  scroll-behavior: smooth;
+  background: var(--bg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--accent-fg);
+}
+
+:focus-visible {
+  outline: 1.5px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.grain-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  opacity: var(--grain-opacity);
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  background-repeat: repeat;
+}
+
+.text-balance {
+  text-wrap: balance;
+}
