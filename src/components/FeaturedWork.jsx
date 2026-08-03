@@ -1,5 +1,4 @@
 import Reveal from "./Reveal";
-import ShotPanel from "./ShotPanel";
 import { asset } from "../lib/asset";
 
 const HIGHLIGHTS = [
@@ -20,13 +19,13 @@ const HIGHLIGHTS = [
   },
 ];
 
-function BrowserFrame({ src, alt, className = "" }) {
+function BrowserFrame({ src, alt, url, className = "" }) {
   return (
     <div className={`overflow-hidden border border-[var(--line)] bg-[var(--panel)] ${className}`}>
       <div className="flex items-center gap-2 border-b border-[var(--line)] px-4 py-2.5">
         <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--muted-2)]" />
         <span className="font-mono text-[0.65rem] tracking-wide text-[var(--muted-2)]">
-          pjrcinsurance.com
+          {url}
         </span>
       </div>
       <img src={src} alt={alt} loading="lazy" className="block h-auto w-full" />
@@ -81,6 +80,7 @@ export default function FeaturedWork() {
             <BrowserFrame
               src={asset("images/pjrc/desktop.jpg")}
               alt="PJRC Insurance homepage, desktop view"
+              url="pjrcinsurance.com"
               className="w-full"
             />
           </Reveal>
@@ -125,15 +125,26 @@ export default function FeaturedWork() {
           </Reveal>
 
           <div className="grid grid-cols-1 gap-10 md:grid-cols-12 md:items-center md:gap-8">
-            <Reveal delay={0.08} className="md:order-1 md:col-span-7">
-              <ShotPanel
-                src={asset("images/pitchtrace/cover.jpg")}
-                alt="PitchTrace app screenshot"
-                label="PitchTrace"
-                sublabel="Live Tracking & Analytics"
-                className="min-h-[320px] md:min-h-[440px]"
-              />
-            </Reveal>
+            <div className="relative md:order-1 md:col-span-7">
+              <Reveal delay={0.08}>
+                <BrowserFrame
+                  src={asset("images/pitchtrace/cover.jpg")}
+                  alt="PitchTrace marketing site, desktop view"
+                  url="pitchtrace.com"
+                  className="w-full"
+                />
+              </Reveal>
+
+              <Reveal
+                delay={0.16}
+                className="mx-auto mt-6 w-[150px] sm:absolute sm:-bottom-12 sm:right-2 sm:mt-0 sm:w-[140px] md:-bottom-14 md:w-[160px]"
+              >
+                <PhoneFrame
+                  src={asset("images/pitchtrace/mobile.jpg")}
+                  alt="PitchTrace coach app, home screen"
+                />
+              </Reveal>
+            </div>
 
             <Reveal className="md:order-2 md:col-span-5">
               <h3 className="text-balance mb-5 font-display text-[clamp(1.8rem,4vw,3rem)] font-medium tracking-tight text-[var(--fg)]">

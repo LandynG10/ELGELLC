@@ -1,6 +1,5 @@
-Drop a real PitchTrace screenshot here as cover.jpg and it will fade in
-automatically over the placeholder — no code changes needed.
+cover.jpg  — PitchTrace marketing site, desktop view (shown in a browser frame)
+mobile.jpg — PitchTrace coach app, home screen (shown in a phone frame)
 
-cover.jpg   App screenshot: live tracking view, post-game report, or analytics dashboard
-
-Recommended: 1600px wide minimum, landscape or portrait (mobile) orientation, JPG or WebP.
+To update with newer screenshots, replace these two files directly
+(same filenames) — no code changes needed.
