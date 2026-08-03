@@ -1,6 +1,8 @@
 import Reveal from "./Reveal";
 
-const CONTACT_EMAIL = "hello@elgellc.com";
+const CONTACT_EMAIL = "ElgeLLC@outlook.com";
+const CONTACT_EMAIL_CC = "sovereignjose23@gmail.com";
+const MAILTO = `mailto:${CONTACT_EMAIL}?cc=${CONTACT_EMAIL_CC}`;
 
 export default function Contact() {
   return (
@@ -46,7 +48,7 @@ export default function Contact() {
 
         <Reveal delay={0.22} className="mt-10 flex flex-col items-center gap-8">
           <a
-            href={`mailto:${CONTACT_EMAIL}`}
+            href={MAILTO}
             className="group relative inline-flex items-center gap-3 overflow-hidden border border-[var(--fg)] px-8 py-4 text-base font-medium text-[var(--fg)] no-underline"
           >
             <span className="relative z-10 transition-colors duration-300 group-hover:text-[var(--accent-fg)]">
@@ -65,7 +67,7 @@ export default function Contact() {
           </a>
 
           <a
-            href={`mailto:${CONTACT_EMAIL}`}
+            href={MAILTO}
             className="font-mono text-sm text-[var(--muted)] no-underline transition-colors hover:text-[var(--fg)]"
           >
             {CONTACT_EMAIL}
