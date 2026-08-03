@@ -1,6 +1,6 @@
 import Reveal from "./Reveal";
 
-const CONTACT_EMAIL = "landyngrant04@gmail.com";
+const CONTACT_EMAIL = "hello@elgellc.com";
 
 export default function Contact() {
   return (
@@ -36,7 +36,15 @@ export default function Contact() {
           </p>
         </Reveal>
 
-        <Reveal delay={0.18} className="mt-12 flex flex-col items-center gap-8">
+        <Reveal delay={0.16} className="mx-auto mt-10 flex items-center justify-center gap-3">
+          <span aria-hidden="true" className="h-px w-8 bg-[var(--line-strong)]" />
+          <p className="font-mono text-[0.7rem] uppercase tracking-[0.14em] text-[var(--muted-2)]">
+            Built for teams where the workflow is the product.
+          </p>
+          <span aria-hidden="true" className="h-px w-8 bg-[var(--line-strong)]" />
+        </Reveal>
+
+        <Reveal delay={0.22} className="mt-10 flex flex-col items-center gap-8">
           <a
             href={`mailto:${CONTACT_EMAIL}`}
             className="group relative inline-flex items-center gap-3 overflow-hidden border border-[var(--fg)] px-8 py-4 text-base font-medium text-[var(--fg)] no-underline"

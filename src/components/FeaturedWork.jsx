@@ -1,129 +1,49 @@
-import { useRef } from "react";
-import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import Reveal from "./Reveal";
 import ShotPanel from "./ShotPanel";
 import { asset } from "../lib/asset";
 
-const PANELS = [
+const HIGHLIGHTS = [
   {
-    key: "discovery",
     index: "01",
-    label: "Discovery",
-    src: asset("images/pjrc/discovery.jpg"),
-    span: "lg:col-span-4",
-    copy: "We started inside PJRC's operations, mapping every handoff between intake, underwriting, and carrier communication before writing a line of code. The platform's architecture was shaped by how the business actually runs, not a generic insurance template.",
+    title: "Regional Positioning",
+    copy: "Local trust and East Texas roots, paired with a clear growth narrative for the new markets PJRC is expanding into.",
   },
   {
-    key: "underwriting",
     index: "02",
-    label: "Underwriting Workflow",
-    src: asset("images/pjrc/underwriting.jpg"),
-    span: "lg:col-span-4",
-    copy: "A purpose-built workspace gives underwriters a single view of applicant data, risk signals, and prior decisions, replacing scattered spreadsheets with a workflow that moves cases forward instead of stalling them.",
+    title: "Coverage, Made Legible",
+    copy: "Personal, business, life, health, and financial coverage lines, presented clearly, with a direct path to request a review.",
   },
   {
-    key: "routing",
     index: "03",
-    label: "Carrier Routing",
-    src: asset("images/pjrc/carrier-routing.jpg"),
-    span: "lg:col-span-4",
-    copy: "Business rules determine, case by case, which carrier a policy should route to, encoded directly into the platform so routing decisions are consistent, auditable, and no longer dependent on institutional memory.",
-  },
-  {
-    key: "enrollment",
-    index: "04",
-    label: "Enrollment Handoff",
-    src: asset("images/pjrc/enrollment.jpg"),
-    span: "lg:col-span-6",
-    copy: "Once a policy clears underwriting, enrollment happens without re-entry, re-verification, or a second system of record: a clean, structured handoff from decision to activation.",
-  },
-  {
-    key: "architecture",
-    index: "05",
-    label: "Platform Architecture",
-    src: asset("images/pjrc/architecture.jpg"),
-    span: "lg:col-span-6",
-    copy: "Built on a modular architecture designed to absorb new carriers, new products, and new compliance requirements without a rebuild: infrastructure meant to outlast this year's roadmap.",
+    title: "Built to Convert",
+    copy: "Every section leads back to one action — request a coverage review — with no dead ends.",
   },
 ];
 
-function ScrollBreakApart() {
-  const ref = useRef(null);
-  const reduceMotion = useReducedMotion();
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start start", "end end"],
-  });
-
-  const coverOpacity = useTransform(scrollYProgress, [0, 0.14, 0.32], [1, 1, 0]);
-  const coverScale = useTransform(scrollYProgress, [0, 0.32], [1, 0.92]);
-  const coverBlur = useTransform(scrollYProgress, [0, 0.32], [0, 6]);
-  const coverFilter = useTransform(coverBlur, (v) => `blur(${v}px)`);
-
+function BrowserFrame({ src, alt, className = "" }) {
   return (
-    <div ref={ref} className="relative hidden lg:block lg:h-[280vh]">
-      <div className="sticky top-0 flex h-screen items-center overflow-hidden">
-        <div className="mx-auto w-full max-w-[1440px] px-10">
-          <div className="relative h-[70vh]">
-            {!reduceMotion && (
-              <motion.div
-                style={{
-                  opacity: coverOpacity,
-                  scale: coverScale,
-                  filter: coverFilter,
-                }}
-                className="absolute inset-0 z-10 overflow-hidden border border-[var(--line)] bg-[var(--panel)]"
-              >
-                <ShotPanel
-                  src={asset("images/pjrc/cover.jpg")}
-                  alt="PJRC Insurance platform overview"
-                  label="PJRC Insurance"
-                  sublabel="Platform Overview"
-                  className="h-full w-full"
-                />
-              </motion.div>
-            )}
-
-            <div className="grid h-full grid-cols-12 gap-3">
-              {PANELS.map((panel, i) => {
-                const start = 0.12 + i * 0.09;
-                const end = start + 0.24;
-                return (
-                  <PanelTile
-                    key={panel.key}
-                    panel={panel}
-                    scrollYProgress={scrollYProgress}
-                    start={reduceMotion ? 0 : start}
-                    end={reduceMotion ? 0 : end}
-                  />
-                );
-              })}
-            </div>
-          </div>
-        </div>
+    <div className={`overflow-hidden border border-[var(--line)] bg-[var(--panel)] ${className}`}>
+      <div className="flex items-center gap-2 border-b border-[var(--line)] px-4 py-2.5">
+        <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--muted-2)]" />
+        <span className="font-mono text-[0.65rem] tracking-wide text-[var(--muted-2)]">
+          pjrcinsurance.com
+        </span>
       </div>
+      <img src={src} alt={alt} loading="lazy" className="block h-auto w-full" />
     </div>
   );
 }
 
-function PanelTile({ panel, scrollYProgress, start, end }) {
-  const opacity = useTransform(scrollYProgress, [start, end], [0, 1]);
-  const y = useTransform(scrollYProgress, [start, end], [36, 0]);
-  const scale = useTransform(scrollYProgress, [start, end], [0.94, 1]);
-
+function PhoneFrame({ src, alt, className = "" }) {
   return (
-    <motion.div
-      style={{ opacity, y, scale }}
-      className={`col-span-12 ${panel.span}`}
+    <div
+      className={`overflow-hidden rounded-[1.75rem] border-[3px] border-[var(--panel-2)] bg-[var(--panel)] shadow-[0_18px_50px_-25px_rgba(0,0,0,0.5)] ${className}`}
     >
-      <ShotPanel
-        src={panel.src}
-        alt={`${panel.label} screenshot`}
-        index={Number(panel.index)}
-        label={`${panel.index} / ${panel.label}`}
-        className="h-full min-h-[220px]"
-      />
-    </motion.div>
+      <div className="flex justify-center py-2">
+        <span className="h-1 w-9 rounded-full bg-[var(--muted-2)] opacity-60" />
+      </div>
+      <img src={src} alt={alt} loading="lazy" className="block h-auto w-full" />
+    </div>
   );
 }
 
@@ -136,7 +56,7 @@ export default function FeaturedWork() {
             Selected Work / 01
           </p>
           <p className="hidden font-mono text-[0.7rem] uppercase tracking-[0.28em] text-[var(--muted-2)] md:block">
-            Insurance &middot; Operations Platform
+            Insurance &middot; Regional Brokerage
           </p>
         </Reveal>
 
@@ -148,54 +68,45 @@ export default function FeaturedWork() {
 
         <Reveal delay={0.08} className="mt-6 max-w-2xl">
           <p className="text-balance text-lg leading-relaxed text-[var(--muted)]">
-            ELGE partnered with PJRC Insurance to replace a patchwork of
-            spreadsheets, email chains, and legacy portals with a single
-            platform built around how underwriters, carriers, and enrollees
-            actually work.
+            ELGE designed and built the public-facing platform for PJRC
+            Insurance Group, an independent brokerage based in East Texas.
+            The site needed to carry the credibility of an established,
+            regionally trusted operator while giving PJRC room to expand
+            into new markets, without ever feeling like a template.
           </p>
         </Reveal>
-      </div>
 
-      <div className="mt-16 md:mt-20">
-        <ScrollBreakApart />
-
-        {/* Mobile / static fallback: stacked, no scroll-pin */}
-        <div className="mx-auto grid max-w-[1440px] grid-cols-1 gap-3 px-6 lg:hidden md:px-10">
-          <Reveal className="min-h-[240px]">
-            <ShotPanel
-              src={asset("images/pjrc/cover.jpg")}
-              alt="PJRC Insurance platform overview"
-              label="PJRC Insurance"
-              sublabel="Platform Overview"
-              className="h-full min-h-[240px]"
+        <div className="relative mx-auto mt-20 max-w-[1040px] md:mt-28">
+          <Reveal>
+            <BrowserFrame
+              src={asset("images/pjrc/desktop.jpg")}
+              alt="PJRC Insurance homepage, desktop view"
+              className="w-full"
             />
           </Reveal>
-          {PANELS.map((panel, i) => (
-            <Reveal key={panel.key} delay={i * 0.05} className="min-h-[200px]">
-              <ShotPanel
-                src={panel.src}
-                alt={`${panel.label} screenshot`}
-                index={Number(panel.index)}
-                label={`${panel.index} / ${panel.label}`}
-                className="h-full min-h-[200px]"
-              />
-            </Reveal>
-          ))}
-        </div>
-      </div>
 
-      <div className="mx-auto mt-20 max-w-[1440px] px-6 md:mt-28 md:px-10">
-        <div className="grid grid-cols-1 gap-x-10 gap-y-12 border-t border-[var(--line)] pt-14 md:grid-cols-2">
-          {PANELS.map((panel, i) => (
-            <Reveal key={panel.key} delay={(i % 2) * 0.06}>
+          <Reveal
+            delay={0.12}
+            className="mx-auto mt-6 w-[220px] sm:absolute sm:-bottom-14 sm:right-0 sm:mt-0 sm:w-[210px] md:-bottom-16 md:w-[240px]"
+          >
+            <PhoneFrame
+              src={asset("images/pjrc/mobile.jpg")}
+              alt="PJRC Insurance homepage, mobile view"
+            />
+          </Reveal>
+        </div>
+
+        <div className="mt-24 grid grid-cols-1 gap-x-10 gap-y-12 border-t border-[var(--line)] pt-14 sm:mt-16 md:mt-28 md:grid-cols-3">
+          {HIGHLIGHTS.map((item, i) => (
+            <Reveal key={item.index} delay={i * 0.06}>
               <p className="mb-3 font-mono text-[0.7rem] uppercase tracking-[0.2em] text-[var(--muted-2)]">
-                {panel.index}
+                {item.index}
               </p>
               <h3 className="mb-3 font-display text-xl font-medium text-[var(--fg)]">
-                {panel.label}
+                {item.title}
               </h3>
               <p className="text-balance leading-relaxed text-[var(--muted)]">
-                {panel.copy}
+                {item.copy}
               </p>
             </Reveal>
           ))}
