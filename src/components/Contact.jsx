@@ -1,8 +1,5 @@
 import Reveal from "./Reveal";
-
-const CONTACT_EMAIL = "support@elgestudio.net";
-const CONTACT_EMAIL_CC = "landyngrant@elgestudio.net,joseaguilar@elgestudio.net";
-const MAILTO = `mailto:${CONTACT_EMAIL}?cc=${CONTACT_EMAIL_CC}`;
+import ContactForm from "./ContactForm";
 
 export default function Contact() {
   return (
@@ -46,32 +43,8 @@ export default function Contact() {
           <span aria-hidden="true" className="h-px w-8 bg-[var(--line-strong)]" />
         </Reveal>
 
-        <Reveal delay={0.22} className="mt-10 flex flex-col items-center gap-8">
-          <a
-            href={MAILTO}
-            className="group relative inline-flex items-center gap-3 overflow-hidden border border-[var(--fg)] px-8 py-4 text-base font-medium text-[var(--fg)] no-underline"
-          >
-            <span className="relative z-10 transition-colors duration-300 group-hover:text-[var(--accent-fg)]">
-              Email us
-            </span>
-            <span
-              aria-hidden="true"
-              className="relative z-10 transition-transform duration-300 group-hover:translate-x-1 group-hover:text-[var(--accent-fg)]"
-            >
-              &rarr;
-            </span>
-            <span
-              aria-hidden="true"
-              className="absolute inset-0 origin-left scale-x-0 bg-[var(--accent)] transition-transform duration-300 ease-out group-hover:scale-x-100"
-            />
-          </a>
-
-          <a
-            href={MAILTO}
-            className="font-mono text-sm text-[var(--muted)] no-underline transition-colors hover:text-[var(--fg)]"
-          >
-            {CONTACT_EMAIL}
-          </a>
+        <Reveal delay={0.22}>
+          <ContactForm />
         </Reveal>
       </div>
     </section>
