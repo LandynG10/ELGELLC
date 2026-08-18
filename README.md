@@ -27,12 +27,15 @@ same filenames, no code changes needed.
 
 ## Deploy
 
-Deployed to GitHub Pages from the `gh-pages` branch. To redeploy:
+Deployed to GitHub Pages from the `gh-pages` branch, served at the custom
+domain `elgestudio.net` (DNS managed in Cloudflare). To redeploy:
 
 ```bash
 npm run deploy
 ```
 
-`vite.config.js` sets `base: '/ELGELLC/'` to match the GitHub Pages project
-URL. If you move this to a custom domain or a different host, update that
-back to `/`.
+`vite.config.js` sets `base: '/'` since the site is served from the domain
+root. `public/CNAME` tells GitHub Pages which domain to serve — it's
+included in every build automatically. If you ever move off the custom
+domain back to the bare `github.io/ELGELLC/` project URL, delete
+`public/CNAME` and set `base` back to `/ELGELLC/`.
