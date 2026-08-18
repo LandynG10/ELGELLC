@@ -1,8 +1,9 @@
 import { BrandMark, Wordmark } from "./Logo";
+import { FacebookIcon, InstagramIcon } from "./SocialIcons";
 
 const SOCIALS = [
-  { label: "Facebook", href: "https://www.facebook.com/ELGEStudio/" },
-  { label: "Instagram", href: "https://www.instagram.com/elgestudios/" },
+  { label: "Facebook", href: "https://www.facebook.com/ELGEStudio/", Icon: FacebookIcon },
+  { label: "Instagram", href: "https://www.instagram.com/elgestudios/", Icon: InstagramIcon },
 ];
 
 export default function Footer() {
@@ -39,16 +40,17 @@ export default function Footer() {
           <span aria-hidden="true" className="hidden h-4 w-px bg-[var(--line-strong)] md:block" />
 
           <nav aria-label="Social">
-            <ul className="flex items-center gap-6">
-              {SOCIALS.map((social) => (
-                <li key={social.label}>
+            <ul className="flex items-center gap-3">
+              {SOCIALS.map(({ label, href, Icon }) => (
+                <li key={label}>
                   <a
-                    href={social.href}
+                    href={href}
                     target="_blank"
                     rel="noreferrer"
-                    className="text-sm text-[var(--muted)] no-underline transition-colors hover:text-[var(--fg)]"
+                    aria-label={label}
+                    className="flex h-8 w-8 items-center justify-center border border-[var(--line)] text-[var(--muted)] no-underline transition-colors duration-300 hover:border-[var(--accent)] hover:text-[var(--accent)]"
                   >
-                    {social.label}
+                    <Icon className="h-3.5 w-3.5" />
                   </a>
                 </li>
               ))}
