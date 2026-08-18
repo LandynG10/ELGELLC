@@ -1,3 +1,8 @@
+export const SOCIALS = [
+  { label: "Facebook", href: "https://www.facebook.com/ELGEStudio/", Icon: FacebookIcon },
+  { label: "Instagram", href: "https://www.instagram.com/elgestudios/", Icon: InstagramIcon },
+];
+
 export function FacebookIcon(props) {
   return (
     <svg

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useTheme } from "../context/ThemeContext";
 import { BrandMark, Wordmark } from "./Logo";
+import { SOCIALS } from "./SocialIcons";
 
 const LINKS = [
   { href: "#work", label: "Work" },
@@ -67,18 +68,38 @@ export default function Nav() {
           <Wordmark className="text-lg" />
         </a>
 
-        <ul className="hidden items-center gap-9 md:flex">
-          {LINKS.map((link) => (
-            <li key={link.href}>
-              <a
-                href={link.href}
-                className="font-sans text-[0.85rem] text-[var(--muted)] no-underline transition-colors hover:text-[var(--fg)]"
-              >
-                {link.label}
-              </a>
-            </li>
-          ))}
-        </ul>
+        <div className="hidden items-center gap-9 md:flex">
+          <ul className="flex items-center gap-9">
+            {LINKS.map((link) => (
+              <li key={link.href}>
+                <a
+                  href={link.href}
+                  className="font-sans text-[0.85rem] text-[var(--muted)] no-underline transition-colors hover:text-[var(--fg)]"
+                >
+                  {link.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+
+          <span aria-hidden="true" className="h-4 w-px bg-[var(--line-strong)]" />
+
+          <ul className="flex items-center gap-3">
+            {SOCIALS.map(({ label, href, Icon }) => (
+              <li key={label}>
+                <a
+                  href={href}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label={label}
+                  className="flex h-7 w-7 items-center justify-center text-[var(--muted)] no-underline transition-colors hover:text-[var(--accent)]"
+                >
+                  <Icon className="h-3.5 w-3.5" />
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
 
         <div className="flex items-center gap-3">
           <ThemeToggle />
@@ -127,6 +148,22 @@ export default function Nav() {
                     className="block py-2.5 font-sans text-base text-[var(--fg)] no-underline"
                   >
                     {link.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+
+            <ul className="flex items-center gap-3 border-t border-[var(--line)] px-6 py-4">
+              {SOCIALS.map(({ label, href, Icon }) => (
+                <li key={label}>
+                  <a
+                    href={href}
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label={label}
+                    className="flex h-8 w-8 items-center justify-center border border-[var(--line)] text-[var(--muted)] no-underline transition-colors hover:border-[var(--accent)] hover:text-[var(--accent)]"
+                  >
+                    <Icon className="h-3.5 w-3.5" />
                   </a>
                 </li>
               ))}

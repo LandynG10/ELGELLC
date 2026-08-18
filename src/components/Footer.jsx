@@ -1,10 +1,5 @@
 import { BrandMark, Wordmark } from "./Logo";
-import { FacebookIcon, InstagramIcon } from "./SocialIcons";
-
-const SOCIALS = [
-  { label: "Facebook", href: "https://www.facebook.com/ELGEStudio/", Icon: FacebookIcon },
-  { label: "Instagram", href: "https://www.instagram.com/elgestudios/", Icon: InstagramIcon },
-];
+import { SOCIALS } from "./SocialIcons";
 
 export default function Footer() {
   const year = new Date().getFullYear();
