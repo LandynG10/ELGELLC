@@ -1,7 +1,7 @@
 import Reveal from "./Reveal";
 
-const CONTACT_EMAIL = "ElgeLLC@outlook.com";
-const CONTACT_EMAIL_CC = "sovereignjose23@gmail.com";
+const CONTACT_EMAIL = "support@elgestudio.net";
+const CONTACT_EMAIL_CC = "landyngrant@elgestudio.net,joseaguilar@elgestudio.net";
 const MAILTO = `mailto:${CONTACT_EMAIL}?cc=${CONTACT_EMAIL_CC}`;
 
 export default function Contact() {

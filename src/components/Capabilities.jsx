@@ -28,7 +28,7 @@ const CAPABILITIES = [
   {
     index: "05",
     title: "CRMs & AI Agents",
-    copy: "Custom CRM platforms and AI-powered agent systems that automate outreach, qualify leads, and handle operational workflows, built to fit how your team actually sells and operates, not a generic pipeline template.",
+    copy: "Custom CRM platforms and AI agent systems — agents that handle marketing and customer response, and PM agents that keep sales reps briefed and moving — built to fit how your team actually sells and operates, not a generic pipeline template.",
     tags: ["Supabase", "Claude & Gemini", "Automation"],
   },
 ];
