@@ -25,6 +25,12 @@ const CAPABILITIES = [
     copy: "Before we build, we define what's worth building. Technical and product strategy that turns ambiguous problems into a roadmap your team can actually execute.",
     tags: ["Discovery", "Architecture", "Roadmapping"],
   },
+  {
+    index: "05",
+    title: "CRMs & AI Agents",
+    copy: "Custom CRM platforms and AI-powered agent systems that automate outreach, qualify leads, and handle operational workflows, built to fit how your team actually sells and operates, not a generic pipeline template.",
+    tags: ["Supabase", "Claude & Gemini", "Automation"],
+  },
 ];
 
 export default function Capabilities() {
@@ -40,7 +46,7 @@ export default function Capabilities() {
             Capabilities / 02
           </p>
           <h2 className="text-balance max-w-3xl font-display text-[clamp(2rem,5vw,3.75rem)] font-medium leading-[1.02] tracking-tight text-[var(--fg)]">
-            Four disciplines. One team.
+            Five disciplines. One team.
           </h2>
         </Reveal>
 

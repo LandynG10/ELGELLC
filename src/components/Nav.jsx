@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useTheme } from "../context/ThemeContext";
-import { Wordmark } from "./Logo";
+import { BrandMark, Wordmark } from "./Logo";
 
 const LINKS = [
   { href: "#work", label: "Work" },
@@ -60,9 +60,10 @@ export default function Nav() {
       <nav className="mx-auto flex max-w-[1440px] items-center justify-between px-6 py-5 md:px-10">
         <a
           href="#top"
-          className="flex items-center gap-2 no-underline"
-          aria-label="ELGE LLC home"
+          className="flex items-center gap-2.5 no-underline"
+          aria-label="ELGE Studio home"
         >
+          <BrandMark className="h-7 w-7" />
           <Wordmark className="text-lg" />
         </a>
 

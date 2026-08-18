@@ -1,8 +1,9 @@
-# ELGE LLC
+# ELGE Studio
 
-Marketing site for ELGE LLC, a software studio. Single-page, cinematic
-build: React + Tailwind CSS v4 + Framer Motion, with a scroll-linked
-"break apart" case study, dark/light theming, and no backend.
+Marketing site for ELGE Studio, a software studio. Single-page, dark
+editorial build: React + Tailwind CSS v4 + Framer Motion, with a
+restrained scroll-reveal system and intentional (not inverted) dark/light
+theming, and no backend.
 
 ## Develop
 
@@ -18,11 +19,11 @@ npm run build   # outputs to dist/
 npm run preview # serve the production build locally
 ```
 
-## Replacing placeholder screenshots
+## Updating case study screenshots
 
-Drop real images into `public/images/pjrc/` and `public/images/pitchtrace/`
-using the filenames listed in each folder's `README.txt`. They fade in
-automatically over the abstract placeholder panels — no code changes needed.
+`public/images/pitchtrace/` holds the real PitchTrace screenshots
+(`cover.jpg`, `mobile.jpg`). To update them, replace the files directly —
+same filenames, no code changes needed.
 
 ## Deploy
 

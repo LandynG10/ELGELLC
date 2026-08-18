@@ -9,7 +9,7 @@ export function BrandMark({ className = "h-14 w-14" }) {
   return (
     <img
       src={logo}
-      alt="ELGE LLC"
+      alt="ELGE Studio"
       className={`shrink-0 object-contain [filter:var(--logo-filter)] ${className}`}
     />
   );
@@ -20,7 +20,7 @@ export function Wordmark({ className = "" }) {
     <span
       className={`font-display font-semibold tracking-[0.02em] text-[var(--fg)] ${className}`}
     >
-      ELGE<span className="text-[var(--accent)]">.</span>
+      ELGE Studio<span className="text-[var(--accent)]">.</span>
     </span>
   );
 }

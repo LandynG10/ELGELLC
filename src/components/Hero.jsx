@@ -34,7 +34,7 @@ export default function Hero() {
           {...fadeUp(0.08)}
           className="mb-6 text-center font-mono text-[0.7rem] uppercase tracking-[0.28em] text-[var(--muted)]"
         >
-          ELGE LLC &mdash; Software Studio
+          ELGE Studio &mdash; Custom Software
         </motion.p>
 
         <motion.h1
@@ -50,9 +50,9 @@ export default function Hero() {
           {...fadeUp(0.3)}
           className="text-balance mx-auto mt-8 max-w-xl text-center text-base leading-relaxed text-[var(--muted)] md:text-lg"
         >
-          ELGE designs and builds custom web platforms, mobile products,
-          internal tools, and AI-enabled workflows for companies that can't
-          afford to wait on off-the-shelf software.
+          ELGE Studio designs and builds custom web platforms, mobile
+          products, internal tools, CRMs, and AI-enabled workflows for
+          companies that can't afford to wait on off-the-shelf software.
         </motion.p>
 
         <motion.div

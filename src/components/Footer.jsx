@@ -12,7 +12,7 @@ export default function Footer() {
         </div>
 
         <p className="font-mono text-[0.7rem] uppercase tracking-[0.16em] text-[var(--muted-2)]">
-          &copy; {year} ELGE LLC. All rights reserved.
+          &copy; {year} ELGE Studio. All rights reserved.
         </p>
 
         <nav aria-label="Footer">
