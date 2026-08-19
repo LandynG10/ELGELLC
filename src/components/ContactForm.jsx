@@ -18,7 +18,7 @@ const PROJECT_TYPES = [
 ];
 
 const BUDGET_RANGES = [
-  "Under $5,000",
+  "$500 – $5,000",
   "$5,000 – $15,000",
   "$15,000 – $30,000",
   "$30,000+",
@@ -56,7 +56,7 @@ export default function ContactForm() {
   const [step, setStep] = useState(0);
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
-  const [submitError, setSubmitError] = useState(false);
+  const [submitError, setSubmitError] = useState(null);
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -69,8 +69,10 @@ export default function ContactForm() {
 
   const update = (field, value) => setForm((prev) => ({ ...prev, [field]: value }));
 
+  const isValidEmail = (value) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim());
+
   const isStepValid = () => {
-    if (step === 0) return form.name.trim() !== "" && form.email.trim() !== "";
+    if (step === 0) return form.name.trim() !== "" && isValidEmail(form.email);
     return true;
   };
 
@@ -79,7 +81,7 @@ export default function ContactForm() {
 
   const handleSubmit = async () => {
     setSubmitting(true);
-    setSubmitError(false);
+    setSubmitError(null);
     try {
       const res = await fetch(FORM_ENDPOINT, {
         method: "POST",
@@ -96,10 +98,14 @@ export default function ContactForm() {
           _cc: CONTACT_EMAIL_CC,
         }),
       });
-      if (!res.ok) throw new Error("Form submission failed");
+      if (!res.ok) {
+        const data = await res.json().catch(() => null);
+        const reason = data?.errors?.[0]?.message;
+        throw new Error(reason || "Form submission failed");
+      }
       setSubmitted(true);
-    } catch {
-      setSubmitError(true);
+    } catch (err) {
+      setSubmitError(err.message);
     } finally {
       setSubmitting(false);
     }
@@ -198,6 +204,11 @@ export default function ContactForm() {
                   value={form.email}
                   onChange={(e) => update("email", e.target.value)}
                 />
+                {form.email.trim() !== "" && !isValidEmail(form.email) && (
+                  <p className="mt-2 text-xs text-[var(--muted)]">
+                    That doesn't look like a complete email address yet.
+                  </p>
+                )}
               </div>
               <div>
                 <label htmlFor="cf-company" className={labelClass}>
@@ -320,7 +331,10 @@ export default function ContactForm() {
 
       {submitError && (
         <p className="mt-4 text-center text-sm text-[var(--muted)]">
-          Something went wrong sending that. Try again, or email us directly at{" "}
+          {submitError === "Form submission failed"
+            ? "Something went wrong sending that."
+            : `We couldn't send that: ${submitError}.`}{" "}
+          Try again, or email us directly at{" "}
           <a href={MAILTO} className={linkClass}>
             {CONTACT_EMAIL}
           </a>
