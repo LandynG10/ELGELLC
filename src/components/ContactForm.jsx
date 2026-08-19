@@ -29,6 +29,7 @@ const TIMELINES = ["ASAP", "1–2 months", "Flexible"];
 const CONTACT_EMAIL = "support@elgestudio.net";
 const CONTACT_EMAIL_CC = "landyngrant@elgestudio.net,joseaguilar@elgestudio.net";
 const MAILTO = `mailto:${CONTACT_EMAIL}?cc=${CONTACT_EMAIL_CC}`;
+const FORM_ENDPOINT = "https://formspree.io/f/mrpzojvk";
 
 const EASE = [0.16, 1, 0.3, 1];
 
@@ -54,6 +55,8 @@ export default function ContactForm() {
   const reduceMotion = useReducedMotion();
   const [step, setStep] = useState(0);
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState(false);
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -74,10 +77,32 @@ export default function ContactForm() {
   const next = () => step < STEPS.length - 1 && setStep((s) => s + 1);
   const back = () => step > 0 && setStep((s) => s - 1);
 
-  const handleSubmit = () => {
-    // No backend wired up yet: this only updates local UI state.
-    // Wire this to a form endpoint (e.g. Formspree) to actually receive submissions.
-    setSubmitted(true);
+  const handleSubmit = async () => {
+    setSubmitting(true);
+    setSubmitError(false);
+    try {
+      const res = await fetch(FORM_ENDPOINT, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          name: form.name,
+          email: form.email,
+          company: form.company,
+          description: form.description,
+          projectType: form.projectType,
+          budget: form.budget,
+          timeline: form.timeline,
+          _subject: `New project inquiry from ${form.name}`,
+          _cc: CONTACT_EMAIL_CC,
+        }),
+      });
+      if (!res.ok) throw new Error("Form submission failed");
+      setSubmitted(true);
+    } catch {
+      setSubmitError(true);
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   if (submitted) {
@@ -285,12 +310,23 @@ export default function ContactForm() {
           <button
             type="button"
             onClick={handleSubmit}
-            className="bg-[var(--fg)] px-6 py-3 text-sm font-medium text-[var(--bg)] transition-colors hover:bg-[var(--accent)] hover:text-[var(--accent-fg)]"
+            disabled={submitting}
+            className="bg-[var(--fg)] px-6 py-3 text-sm font-medium text-[var(--bg)] transition-colors hover:bg-[var(--accent)] hover:text-[var(--accent-fg)] disabled:opacity-50 disabled:hover:bg-[var(--fg)] disabled:hover:text-[var(--bg)]"
           >
-            Send
+            {submitting ? "Sending…" : "Send"}
           </button>
         )}
       </div>
+
+      {submitError && (
+        <p className="mt-4 text-center text-sm text-[var(--muted)]">
+          Something went wrong sending that. Try again, or email us directly at{" "}
+          <a href={MAILTO} className={linkClass}>
+            {CONTACT_EMAIL}
+          </a>
+          .
+        </p>
+      )}
 
       <p className="mt-6 text-center font-mono text-[0.65rem] uppercase tracking-[0.16em] text-[var(--muted-2)]">
         Step {step + 1} of {STEPS.length}
