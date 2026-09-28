@@ -3,9 +3,8 @@ import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { SOCIALS } from "./SocialIcons";
 
 const STEPS = [
-  { id: "who", label: "Who" },
   { id: "what", label: "What" },
-  { id: "budget", label: "Budget" },
+  { id: "who", label: "Who" },
 ];
 
 const PROJECT_TYPES = [
@@ -17,19 +16,17 @@ const PROJECT_TYPES = [
   "Not sure yet",
 ];
 
-const BUDGET_RANGES = [
-  "$500 – $5,000",
-  "$5,000 – $15,000",
-  "$15,000 – $30,000",
-  "$30,000+",
-];
-
 const TIMELINES = ["ASAP", "1–2 months", "Flexible"];
 
 const CONTACT_EMAIL = "support@elgestudio.net";
 const CONTACT_EMAIL_CC = "landyngrant@elgestudio.net,joseaguilar@elgestudio.net";
 const MAILTO = `mailto:${CONTACT_EMAIL}?cc=${CONTACT_EMAIL_CC}`;
 const FORM_ENDPOINT = "https://formspree.io/f/mrpzojvk";
+// Primary destination: the ELGE CRM — submissions land directly in the
+// /leads dashboard. Formspree stays as an email-notification backup.
+// No secret here: this is a static site, so anything in it is public. The
+// CRM route checks the request's Origin, rate-limits, and uses a honeypot.
+const CRM_ENDPOINT = "https://crm.elgestudio.net/api/leads/website";
 
 const EASE = [0.16, 1, 0.3, 1];
 
@@ -63,8 +60,8 @@ export default function ContactForm() {
     company: "",
     description: "",
     projectType: "",
-    budget: "",
     timeline: "",
+    gotcha: "",
   });
 
   const update = (field, value) => setForm((prev) => ({ ...prev, [field]: value }));
@@ -72,7 +69,7 @@ export default function ContactForm() {
   const isValidEmail = (value) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim());
 
   const isStepValid = () => {
-    if (step === 0) return form.name.trim() !== "" && isValidEmail(form.email);
+    if (step === 1) return form.name.trim() !== "" && isValidEmail(form.email);
     return true;
   };
 
@@ -82,26 +79,54 @@ export default function ContactForm() {
   const handleSubmit = async () => {
     setSubmitting(true);
     setSubmitError(null);
+
+    // CRM payload: { data: [{ label, value }] } — the shape the webhook
+    // receiver on crm.elgestudio.net expects.
+    const crmSubmission = fetch(CRM_ENDPOINT, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        formId: "start-a-project",
+        data: [
+          { label: "Name", value: form.name },
+          { label: "Email", value: form.email },
+          { label: "Company", value: form.company },
+          { label: "What are you trying to build", value: form.description },
+          { label: "Project type", value: form.projectType },
+          { label: "Timeline", value: form.timeline },
+          { label: "_gotcha", value: form.gotcha },
+        ],
+      }),
+    });
+
+    // Formspree stays as the email-notification backup.
+    const formspreeSubmission = fetch(FORM_ENDPOINT, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", Accept: "application/json" },
+      body: JSON.stringify({
+        name: form.name,
+        email: form.email,
+        company: form.company,
+        description: form.description,
+        projectType: form.projectType,
+        timeline: form.timeline,
+        _gotcha: form.gotcha,
+        _subject: `New project inquiry from ${form.name}`,
+        _cc: CONTACT_EMAIL_CC,
+      }),
+    });
+
     try {
-      const res = await fetch(FORM_ENDPOINT, {
-        method: "POST",
-        headers: { "Content-Type": "application/json", Accept: "application/json" },
-        body: JSON.stringify({
-          name: form.name,
-          email: form.email,
-          company: form.company,
-          description: form.description,
-          projectType: form.projectType,
-          budget: form.budget,
-          timeline: form.timeline,
-          _subject: `New project inquiry from ${form.name}`,
-          _cc: CONTACT_EMAIL_CC,
-        }),
-      });
-      if (!res.ok) {
-        const data = await res.json().catch(() => null);
-        const reason = data?.errors?.[0]?.message;
-        throw new Error(reason || "Form submission failed");
+      const [crmRes, formspreeRes] = await Promise.allSettled([
+        crmSubmission,
+        formspreeSubmission,
+      ]);
+      const crmOk = crmRes.status === "fulfilled" && crmRes.value.ok;
+      const formspreeOk = formspreeRes.status === "fulfilled" && formspreeRes.value.ok;
+      // Success if either destination got it — the lead isn't lost as long
+      // as one of the two received the submission.
+      if (!crmOk && !formspreeOk) {
+        throw new Error("Form submission failed");
       }
       setSubmitted(true);
     } catch (err) {
@@ -181,6 +206,66 @@ export default function ContactForm() {
           {step === 0 && (
             <>
               <div>
+                <label htmlFor="cf-description" className={labelClass}>
+                  What are you trying to build?
+                </label>
+                <textarea
+                  id="cf-description"
+                  className={`${fieldClass} min-h-[100px] resize-none`}
+                  placeholder="Tell us what's slowing your team down, or what you're trying to build."
+                  value={form.description}
+                  onChange={(e) => update("description", e.target.value)}
+                />
+              </div>
+              <div>
+                <span className={labelClass}>Project Type</span>
+                <div className="grid grid-cols-2 gap-2">
+                  {PROJECT_TYPES.map((type) => (
+                    <button
+                      key={type}
+                      type="button"
+                      aria-pressed={form.projectType === type}
+                      onClick={() => update("projectType", type)}
+                      className={optionClass(form.projectType === type)}
+                    >
+                      {type}
+                    </button>
+                  ))}
+                </div>
+              </div>
+              <div>
+                <span className={labelClass}>Timeline</span>
+                <div className="grid grid-cols-3 gap-2">
+                  {TIMELINES.map((t) => (
+                    <button
+                      key={t}
+                      type="button"
+                      aria-pressed={form.timeline === t}
+                      onClick={() => update("timeline", t)}
+                      className={optionClass(form.timeline === t)}
+                    >
+                      {t}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </>
+          )}
+
+          {step === 1 && (
+            <>
+              {/* Honeypot: hidden from people, filled in by bots */}
+              <input
+                type="text"
+                name="_gotcha"
+                tabIndex={-1}
+                autoComplete="off"
+                aria-hidden="true"
+                className="absolute -left-[9999px] h-px w-px opacity-0"
+                value={form.gotcha}
+                onChange={(e) => update("gotcha", e.target.value)}
+              />
+              <div>
                 <label htmlFor="cf-name" className={labelClass}>
                   Name
                 </label>
@@ -225,76 +310,6 @@ export default function ContactForm() {
               </div>
             </>
           )}
-
-          {step === 1 && (
-            <>
-              <div>
-                <label htmlFor="cf-description" className={labelClass}>
-                  What are you trying to build?
-                </label>
-                <textarea
-                  id="cf-description"
-                  className={`${fieldClass} min-h-[100px] resize-none`}
-                  placeholder="Tell us what's slowing your team down, or what you're trying to build."
-                  value={form.description}
-                  onChange={(e) => update("description", e.target.value)}
-                />
-              </div>
-              <div>
-                <span className={labelClass}>Project Type</span>
-                <div className="grid grid-cols-2 gap-2">
-                  {PROJECT_TYPES.map((type) => (
-                    <button
-                      key={type}
-                      type="button"
-                      aria-pressed={form.projectType === type}
-                      onClick={() => update("projectType", type)}
-                      className={optionClass(form.projectType === type)}
-                    >
-                      {type}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            </>
-          )}
-
-          {step === 2 && (
-            <>
-              <div>
-                <span className={labelClass}>Budget Range</span>
-                <div className="grid grid-cols-2 gap-2">
-                  {BUDGET_RANGES.map((b) => (
-                    <button
-                      key={b}
-                      type="button"
-                      aria-pressed={form.budget === b}
-                      onClick={() => update("budget", b)}
-                      className={optionClass(form.budget === b)}
-                    >
-                      {b}
-                    </button>
-                  ))}
-                </div>
-              </div>
-              <div>
-                <span className={labelClass}>Timeline</span>
-                <div className="grid grid-cols-3 gap-2">
-                  {TIMELINES.map((t) => (
-                    <button
-                      key={t}
-                      type="button"
-                      aria-pressed={form.timeline === t}
-                      onClick={() => update("timeline", t)}
-                      className={optionClass(form.timeline === t)}
-                    >
-                      {t}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            </>
-          )}
         </motion.div>
       </AnimatePresence>
 
@@ -321,7 +336,7 @@ export default function ContactForm() {
           <button
             type="button"
             onClick={handleSubmit}
-            disabled={submitting}
+            disabled={submitting || !isStepValid()}
             className="bg-[var(--fg)] px-6 py-3 text-sm font-medium text-[var(--bg)] transition-colors hover:bg-[var(--accent)] hover:text-[var(--accent-fg)] disabled:opacity-50 disabled:hover:bg-[var(--fg)] disabled:hover:text-[var(--bg)]"
           >
             {submitting ? "Sending…" : "Send"}
