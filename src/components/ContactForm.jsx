@@ -21,9 +21,8 @@ const TIMELINES = ["ASAP", "1–2 months", "Flexible"];
 const CONTACT_EMAIL = "support@elgestudio.net";
 const CONTACT_EMAIL_CC = "landyngrant@elgestudio.net,joseaguilar@elgestudio.net";
 const MAILTO = `mailto:${CONTACT_EMAIL}?cc=${CONTACT_EMAIL_CC}`;
-const FORM_ENDPOINT = "https://formspree.io/f/mrpzojvk";
-// Primary destination: the ELGE CRM — submissions land directly in the
-// /leads dashboard. Formspree stays as an email-notification backup.
+// Submissions go to the ELGE CRM: the lead lands in the /leads dashboard
+// and the CRM emails a formatted copy to support@ (cc Landyn + Jose).
 // No secret here: this is a static site, so anything in it is public. The
 // CRM route checks the request's Origin, rate-limits, and uses a honeypot.
 const CRM_ENDPOINT = "https://crm.elgestudio.net/api/leads/website";
@@ -80,53 +79,29 @@ export default function ContactForm() {
     setSubmitting(true);
     setSubmitError(null);
 
-    // CRM payload: { data: [{ label, value }] } — the shape the webhook
-    // receiver on crm.elgestudio.net expects.
-    const crmSubmission = fetch(CRM_ENDPOINT, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        formId: "start-a-project",
-        data: [
-          { label: "Name", value: form.name },
-          { label: "Email", value: form.email },
-          { label: "Company", value: form.company },
-          { label: "What are you trying to build", value: form.description },
-          { label: "Project type", value: form.projectType },
-          { label: "Timeline", value: form.timeline },
-          { label: "_gotcha", value: form.gotcha },
-        ],
-      }),
-    });
-
-    // Formspree stays as the email-notification backup.
-    const formspreeSubmission = fetch(FORM_ENDPOINT, {
-      method: "POST",
-      headers: { "Content-Type": "application/json", Accept: "application/json" },
-      body: JSON.stringify({
-        name: form.name,
-        email: form.email,
-        company: form.company,
-        description: form.description,
-        projectType: form.projectType,
-        timeline: form.timeline,
-        _gotcha: form.gotcha,
-        _subject: `New project inquiry from ${form.name}`,
-        _cc: CONTACT_EMAIL_CC,
-      }),
-    });
-
     try {
-      const [crmRes, formspreeRes] = await Promise.allSettled([
-        crmSubmission,
-        formspreeSubmission,
-      ]);
-      const crmOk = crmRes.status === "fulfilled" && crmRes.value.ok;
-      const formspreeOk = formspreeRes.status === "fulfilled" && formspreeRes.value.ok;
-      // Success if either destination got it — the lead isn't lost as long
-      // as one of the two received the submission.
-      if (!crmOk && !formspreeOk) {
-        throw new Error("Form submission failed");
+      // CRM payload: { data: [{ label, value }] } — the shape the receiver
+      // on crm.elgestudio.net expects.
+      const res = await fetch(CRM_ENDPOINT, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          formId: "start-a-project",
+          data: [
+            { label: "Name", value: form.name },
+            { label: "Email", value: form.email },
+            { label: "Company", value: form.company },
+            { label: "What are you trying to build", value: form.description },
+            { label: "Project type", value: form.projectType },
+            { label: "Timeline", value: form.timeline },
+            { label: "_gotcha", value: form.gotcha },
+          ],
+        }),
+      });
+      if (!res.ok) {
+        const data = await res.json().catch(() => null);
+        const reason = data?.error?.replace(/\.$/, "");
+        throw new Error(reason || "Form submission failed");
       }
       setSubmitted(true);
     } catch (err) {
