@@ -18,11 +18,10 @@ const PROJECT_TYPES = [
 
 const TIMELINES = ["ASAP", "1–2 months", "Flexible"];
 
-const CONTACT_EMAIL = "support@elgestudio.net";
-const CONTACT_EMAIL_CC = "landyngrant@elgestudio.net,joseaguilar@elgestudio.net";
-const MAILTO = `mailto:${CONTACT_EMAIL}?cc=${CONTACT_EMAIL_CC}`;
+const CONTACT_EMAIL = "landyngrant@elgestudio.net";
+const MAILTO = `mailto:${CONTACT_EMAIL}`;
 // Submissions go to the ELGE CRM: the lead lands in the /leads dashboard
-// and the CRM emails a formatted copy to support@ (cc Landyn + Jose).
+// and the CRM emails a formatted copy to landyngrant@.
 // No secret here: this is a static site, so anything in it is public. The
 // CRM route checks the request's Origin, rate-limits, and uses a honeypot.
 const CRM_ENDPOINT = "https://crm.elgestudio.net/api/leads/website";
