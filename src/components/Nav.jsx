@@ -5,9 +5,10 @@ import { BrandMark, Wordmark } from "./Logo";
 import { SOCIALS } from "./SocialIcons";
 
 const LINKS = [
+  { href: "#services", label: "Pricing" },
   { href: "#work", label: "Work" },
-  { href: "#capabilities", label: "Capabilities" },
   { href: "#process", label: "Process" },
+  { href: "#faq", label: "FAQ" },
   { href: "#contact", label: "Contact" },
 ];
 
@@ -107,7 +108,7 @@ export default function Nav() {
             href="#contact"
             className="hidden border border-[var(--fg)] px-4 py-2 text-[0.8rem] font-medium text-[var(--fg)] no-underline transition-colors hover:border-[var(--accent)] hover:text-[var(--accent)] md:inline-block"
           >
-            Start a project
+            Get a free preview
           </a>
           <button
             type="button"

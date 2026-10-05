@@ -34,25 +34,25 @@ export default function Hero() {
           {...fadeUp(0.08)}
           className="mb-6 text-center font-mono text-[0.7rem] uppercase tracking-[0.28em] text-[var(--muted)]"
         >
-          ELGE Studio &mdash; Custom Software
+          ELGE Studio &mdash; Websites, Booking &amp; AI
         </motion.p>
 
         <motion.h1
           {...fadeUp(0.16)}
           className="text-balance mx-auto max-w-5xl text-center font-display text-[clamp(2.6rem,7vw,6.4rem)] font-medium leading-[0.98] tracking-tight text-[var(--fg)]"
         >
-          Software that moves
+          More calls. More bookings.
           <br />
-          businesses <span className="text-[var(--accent)]">forward.</span>
+          Less <span className="text-[var(--accent)]">busywork.</span>
         </motion.h1>
 
         <motion.p
           {...fadeUp(0.3)}
           className="text-balance mx-auto mt-8 max-w-xl text-center text-base leading-relaxed text-[var(--muted)] md:text-lg"
         >
-          ELGE Studio designs and builds custom web platforms, mobile
-          products, internal tools, CRMs, and AI-enabled workflows for
-          companies that can't afford to wait on off-the-shelf software.
+          Websites that turn Google searches into phone calls, booking
+          systems that fill your calendar, and AI receptionists that
+          answer every call. See a free preview before you pay a dollar.
         </motion.p>
 
         <motion.div
@@ -60,11 +60,11 @@ export default function Hero() {
           className="mt-11 flex flex-col items-center justify-center gap-4 sm:flex-row"
         >
           <a
-            href="#work"
+            href="#contact"
             className="group relative inline-flex items-center gap-2 overflow-hidden border border-[var(--fg)] px-6 py-3 text-sm font-medium text-[var(--fg)] no-underline"
           >
             <span className="relative z-10 transition-colors duration-300 group-hover:text-[var(--accent-fg)]">
-              View our work
+              Get a free preview
             </span>
             <span
               aria-hidden="true"
@@ -72,10 +72,10 @@ export default function Hero() {
             />
           </a>
           <a
-            href="#contact"
+            href="#services"
             className="text-sm font-medium text-[var(--muted)] underline decoration-[var(--line-strong)] underline-offset-8 transition-colors hover:text-[var(--fg)]"
           >
-            Start a project &rarr;
+            See pricing &rarr;
           </a>
         </motion.div>
       </div>
@@ -84,7 +84,7 @@ export default function Hero() {
         {...fadeUp(0.6)}
         className="relative mx-auto mb-10 flex w-full max-w-[1440px] items-center justify-between px-6 font-mono text-[0.65rem] uppercase tracking-[0.16em] text-[var(--muted-2)] md:px-10"
       >
-        <span>Web &middot; Mobile &middot; Automation &middot; AI</span>
+        <span>Web &middot; Booking &middot; AI &middot; Software</span>
         <span className="hidden sm:inline">Scroll</span>
       </motion.div>
     </section>

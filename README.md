@@ -1,6 +1,7 @@
 # ELGE Studio
 
-Marketing site for ELGE Studio, a software studio. Single-page, dark
+Marketing site for ELGE Studio: websites, online booking and AI
+receptionists for local businesses, plus custom software. Single-page, dark
 editorial build: React + Tailwind CSS v4 + Framer Motion, with a
 restrained scroll-reveal system and intentional (not inverted) dark/light
 theming, and no backend.
@@ -18,6 +19,14 @@ npm run dev
 npm run build   # outputs to dist/
 npm run preview # serve the production build locally
 ```
+
+## Editing prices, packages, the guarantee and FAQ
+
+All sales copy that changes often lives in `src/content.js`: the four
+packages (name, price, timeline, what's included), the care plan, the
+three guarantee points and the FAQ. Edit it there; no component changes
+needed. The contact form's "Interested in" options come from the same
+package list, and each package's button preselects itself in the form.
 
 ## Updating case study screenshots
 
