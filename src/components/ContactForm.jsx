@@ -62,6 +62,9 @@ export default function ContactForm() {
     const choose = (e) => {
       setForm((prev) => ({ ...prev, projectType: e.detail }));
       setStep(0);
+      // Reopen the form if a previous enquiry was already sent.
+      setSubmitted(false);
+      setSubmitError(null);
     };
     window.addEventListener("elge:choose-package", choose);
     return () => window.removeEventListener("elge:choose-package", choose);

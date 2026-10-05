@@ -69,7 +69,7 @@ export default function Nav() {
           <Wordmark className="text-lg" />
         </a>
 
-        <div className="hidden items-center gap-9 md:flex">
+        <div className="hidden items-center gap-9 lg:flex">
           <ul className="flex items-center gap-9">
             {LINKS.map((link) => (
               <li key={link.href}>
@@ -106,13 +106,13 @@ export default function Nav() {
           <ThemeToggle />
           <a
             href="#contact"
-            className="hidden border border-[var(--fg)] px-4 py-2 text-[0.8rem] font-medium text-[var(--fg)] no-underline transition-colors hover:border-[var(--accent)] hover:text-[var(--accent)] md:inline-block"
+            className="hidden border border-[var(--fg)] px-4 py-2 text-[0.8rem] font-medium text-[var(--fg)] no-underline transition-colors hover:border-[var(--accent)] hover:text-[var(--accent)] lg:inline-block"
           >
             Get a free preview
           </a>
           <button
             type="button"
-            className="flex h-8 w-8 flex-col items-center justify-center gap-[5px] md:hidden"
+            className="flex h-8 w-8 flex-col items-center justify-center gap-[5px] lg:hidden"
             aria-label={menuOpen ? "Close menu" : "Open menu"}
             aria-expanded={menuOpen}
             onClick={() => setMenuOpen((v) => !v)}
@@ -138,7 +138,7 @@ export default function Nav() {
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-            className="overflow-hidden border-b border-[var(--line)] bg-[var(--bg)] md:hidden"
+            className="overflow-hidden border-b border-[var(--line)] bg-[var(--bg)] lg:hidden"
           >
             <ul className="flex flex-col gap-1 px-6 py-4">
               {LINKS.map((link) => (
