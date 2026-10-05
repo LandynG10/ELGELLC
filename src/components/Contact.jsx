@@ -17,28 +17,28 @@ export default function Contact() {
       <div className="relative mx-auto max-w-[1440px] px-6 text-center md:px-10">
         <Reveal>
           <p className="mb-6 font-mono text-[0.7rem] uppercase tracking-[0.28em] text-[var(--muted)]">
-            Start a Project / 04
+            Free Preview / 06
           </p>
         </Reveal>
 
         <Reveal delay={0.06}>
           <h2 className="text-balance mx-auto max-w-4xl font-display text-[clamp(2.2rem,6vw,5rem)] font-medium leading-[1.02] tracking-tight text-[var(--fg)]">
-            Let's build something that moves your business forward.
+            Get a free preview of your new site.
           </h2>
         </Reveal>
 
         <Reveal delay={0.12}>
           <p className="text-balance mx-auto mt-8 max-w-lg text-lg leading-relaxed text-[var(--muted)]">
-            Tell us what's slowing your team down, or what you're trying to
-            build. We'll tell you honestly whether we're the right team for
-            it.
+            Tell us about your business. We'll reply within one business
+            day, and if it's a fit you'll see a working preview before you
+            pay anything.
           </p>
         </Reveal>
 
         <Reveal delay={0.16} className="mx-auto mt-10 flex items-center justify-center gap-3">
           <span aria-hidden="true" className="h-px w-8 bg-[var(--line-strong)]" />
           <p className="font-mono text-[0.7rem] uppercase tracking-[0.14em] text-[var(--muted-2)]">
-            Built for teams where the workflow is the product.
+            No preview you love, no invoice.
           </p>
           <span aria-hidden="true" className="h-px w-8 bg-[var(--line-strong)]" />
         </Reveal>

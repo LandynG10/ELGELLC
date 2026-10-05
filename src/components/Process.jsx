@@ -5,23 +5,23 @@ import Reveal from "./Reveal";
 const STEPS = [
   {
     index: "01",
-    title: "Discover",
-    copy: "We learn how your business actually operates: its workflows, constraints, and the decisions that get made every day.",
+    title: "Quick call",
+    copy: "Fifteen minutes about your business, your customers and what you want more of. No tech talk needed.",
   },
   {
     index: "02",
-    title: "Architect",
-    copy: "We design the system before we design the interface: data models, integrations, and technical decisions that hold up under real use.",
+    title: "Free preview",
+    copy: "In about 2 business days you get a working preview of your new site to click through on your phone.",
   },
   {
     index: "03",
-    title: "Build",
-    copy: "Software shipped in working increments, not a single reveal at the end. You see progress continuously, not quarterly.",
+    title: "Approve & launch",
+    copy: "Like it? Put down a deposit, ask for any changes, and we take it live on your domain, usually within a week.",
   },
   {
     index: "04",
-    title: "Launch & Support",
-    copy: "We stay in the system after launch: refining, extending, and supporting what we built as your business changes.",
+    title: "Grow",
+    copy: "Add online booking, an AI receptionist or a care plan whenever you're ready. We stay a text away.",
   },
 ];
 
@@ -42,10 +42,10 @@ export default function Process() {
       <div className="mx-auto max-w-[1440px] px-6 md:px-10">
         <Reveal className="mb-16 md:mb-20">
           <p className="mb-6 font-mono text-[0.7rem] uppercase tracking-[0.28em] text-[var(--muted)]">
-            Process / 03
+            How It Works / 04
           </p>
           <h2 className="text-balance max-w-3xl font-display text-[clamp(2rem,5vw,3.75rem)] font-medium leading-[1.02] tracking-tight text-[var(--fg)]">
-            A disciplined path from problem to product.
+            From first call to live site in about a week.
           </h2>
         </Reveal>
 

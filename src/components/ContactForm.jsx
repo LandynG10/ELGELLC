@@ -1,19 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { SOCIALS } from "./SocialIcons";
+import { PROJECT_TYPES } from "../content";
 
 const STEPS = [
   { id: "what", label: "What" },
   { id: "who", label: "Who" },
-];
-
-const PROJECT_TYPES = [
-  "Web Applications",
-  "Mobile Applications",
-  "Workflow Automation & AI",
-  "Product Strategy",
-  "CRMs & AI Agents",
-  "Not sure yet",
 ];
 
 const TIMELINES = ["ASAP", "1–2 months", "Flexible"];
@@ -55,6 +47,7 @@ export default function ContactForm() {
   const [form, setForm] = useState({
     name: "",
     email: "",
+    phone: "",
     company: "",
     description: "",
     projectType: "",
@@ -63,6 +56,19 @@ export default function ContactForm() {
   });
 
   const update = (field, value) => setForm((prev) => ({ ...prev, [field]: value }));
+
+  // A package's "Get a free preview" button (Services.jsx) preselects it here.
+  useEffect(() => {
+    const choose = (e) => {
+      setForm((prev) => ({ ...prev, projectType: e.detail }));
+      setStep(0);
+      // Reopen the form if a previous enquiry was already sent.
+      setSubmitted(false);
+      setSubmitError(null);
+    };
+    window.addEventListener("elge:choose-package", choose);
+    return () => window.removeEventListener("elge:choose-package", choose);
+  }, []);
 
   const isValidEmail = (value) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim());
 
@@ -89,6 +95,7 @@ export default function ContactForm() {
           data: [
             { label: "Name", value: form.name },
             { label: "Email", value: form.email },
+            { label: "Phone", value: form.phone },
             { label: "Company", value: form.company },
             { label: "What are you trying to build", value: form.description },
             { label: "Project type", value: form.projectType },
@@ -181,18 +188,18 @@ export default function ContactForm() {
             <>
               <div>
                 <label htmlFor="cf-description" className={labelClass}>
-                  What are you trying to build?
+                  What do you need?
                 </label>
                 <textarea
                   id="cf-description"
                   className={`${fieldClass} min-h-[100px] resize-none`}
-                  placeholder="Tell us what's slowing your team down, or what you're trying to build."
+                  placeholder="e.g. I run a cleaning business and need a website people can book from."
                   value={form.description}
                   onChange={(e) => update("description", e.target.value)}
                 />
               </div>
               <div>
-                <span className={labelClass}>Project Type</span>
+                <span className={labelClass}>Interested in</span>
                 <div className="grid grid-cols-2 gap-2">
                   {PROJECT_TYPES.map((type) => (
                     <button
@@ -259,7 +266,7 @@ export default function ContactForm() {
                   id="cf-email"
                   type="email"
                   className={fieldClass}
-                  placeholder="you@company.com"
+                  placeholder="you@yourbusiness.com"
                   value={form.email}
                   onChange={(e) => update("email", e.target.value)}
                 />
@@ -270,14 +277,29 @@ export default function ContactForm() {
                 )}
               </div>
               <div>
+                <label htmlFor="cf-phone" className={labelClass}>
+                  Phone{" "}
+                  <span className="normal-case text-[var(--muted-2)]">(optional, fastest reply)</span>
+                </label>
+                <input
+                  id="cf-phone"
+                  type="tel"
+                  autoComplete="tel"
+                  className={fieldClass}
+                  placeholder="(555) 555-5555"
+                  value={form.phone}
+                  onChange={(e) => update("phone", e.target.value)}
+                />
+              </div>
+              <div>
                 <label htmlFor="cf-company" className={labelClass}>
-                  Company{" "}
+                  Business name{" "}
                   <span className="normal-case text-[var(--muted-2)]">(optional)</span>
                 </label>
                 <input
                   id="cf-company"
                   className={fieldClass}
-                  placeholder="Company name"
+                  placeholder="Your business"
                   value={form.company}
                   onChange={(e) => update("company", e.target.value)}
                 />

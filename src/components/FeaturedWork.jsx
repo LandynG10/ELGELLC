@@ -36,7 +36,7 @@ export default function FeaturedWork() {
       <div className="mx-auto max-w-[1440px] px-6 md:px-10">
         <Reveal className="mb-16 flex items-baseline justify-between gap-6 md:mb-20">
           <p className="font-mono text-[0.7rem] uppercase tracking-[0.28em] text-[var(--muted)]">
-            Selected Work / 01
+            Selected Work / 03
           </p>
           <p className="hidden font-mono text-[0.7rem] uppercase tracking-[0.28em] text-[var(--muted-2)] md:block">
             Baseball &middot; Mobile Web App

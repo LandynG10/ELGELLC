@@ -19,10 +19,15 @@ export default function Footer() {
         <div className="flex flex-col items-center gap-6 md:flex-row">
           <nav aria-label="Footer">
             <ul className="flex items-center gap-6">
-              {["Work", "Capabilities", "Process", "Contact"].map((label) => (
+              {[
+                ["Pricing", "services"],
+                ["Work", "work"],
+                ["FAQ", "faq"],
+                ["Contact", "contact"],
+              ].map(([label, id]) => (
                 <li key={label}>
                   <a
-                    href={`#${label.toLowerCase()}`}
+                    href={`#${id}`}
                     className="text-sm text-[var(--muted)] no-underline transition-colors hover:text-[var(--fg)]"
                   >
                     {label}
