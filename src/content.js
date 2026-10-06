@@ -35,9 +35,10 @@ export const PACKAGES = [
     name: "AI Receptionist",
     price: "from $500 setup + $149/mo",
     timeline: "Live in about a week",
-    pitch: "An AI phone agent that answers every call, day or night, and books the job.",
+    pitch: "An AI phone agent that answers every call in English or Spanish, day or night, and books the job.",
     includes: [
       "Answers calls 24/7 in a natural voice",
+      "Speaks English and Spanish (more languages on request)",
       "Answers FAQs, takes details, books appointments",
       "Texts back every missed call within seconds",
       "Call summaries sent straight to you",
@@ -93,7 +94,7 @@ export const FAQ = [
   },
   {
     q: "What does the AI receptionist actually do?",
-    a: "It answers your business line when you can't, in a natural voice. It answers common questions, collects the caller's details, books appointments on your calendar and sends you a summary. Every missed call also gets an instant text back so the lead doesn't go to a competitor.",
+    a: "It answers your business line when you can't, in a natural voice, in English or Spanish (other languages on request). It answers common questions, collects the caller's details, books appointments on your calendar and sends you a summary. Every missed call also gets an instant text back so the lead doesn't go to a competitor.",
   },
   {
     q: "Do I have to pay monthly?",
