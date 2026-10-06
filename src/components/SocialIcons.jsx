@@ -3,7 +3,7 @@ export const SOCIALS = [
   { label: "Instagram", href: "https://www.instagram.com/elgestudios/", Icon: InstagramIcon },
 ];
 
-export function FacebookIcon(props) {
+function FacebookIcon(props) {
   return (
     <svg
       viewBox="0 0 24 24"
@@ -20,7 +20,7 @@ export function FacebookIcon(props) {
   );
 }
 
-export function InstagramIcon(props) {
+function InstagramIcon(props) {
   return (
     <svg
       viewBox="0 0 24 24"
